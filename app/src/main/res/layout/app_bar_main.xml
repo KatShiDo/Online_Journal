@@ -21,5 +21,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
+    <include layout="@layout/content_account" />
+    <include layout="@layout/content_documents" />
+    <include layout="@layout/content_online_journal" />
+    <include layout="@layout/content_actions" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,15 +1,19 @@
 <resources>
-    <string name="app_name">Электронный журнал</string>
+    <string name="app_name" />
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Гость
-    </string>
-    <string name="nav_header_subtitle"></string>
+    <string name="nav_header_title">Гость</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
 
+    <string name="menu_main">Главная</string>
     <string name="menu_account">Аккаунт</string>
     <string name="menu_documents">Документы</string>
     <string name="menu_online_journal">Электронный журнал</string>
     <string name="menu_actions">Специальные возможности</string>
+    <string name="school_description">Описание школы</string>
+    <string name="hint_login">Введите логин</string>
+    <string name="hint_password">Введите пароль</string>
+    <string name="button_enter_name">Войти</string>
+    <string name="todo">TODO</string>
 </resources>
