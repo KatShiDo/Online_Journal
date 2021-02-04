@@ -29,14 +29,26 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import org.w3c.dom.Text;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+{
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private ConstraintLayout content_main, content_account, content_documents, content_online_journal, content_actions;
+    private Connection con;
+    private Statement st = null;
+    private ResultSet rs = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
@@ -50,21 +62,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        content_main = findViewById(R.id.content_main);
-        content_account = findViewById(R.id.content_account);
-        content_documents = findViewById(R.id.content_documents);
-        content_online_journal = findViewById(R.id.content_online_journal);
-        content_actions = findViewById(R.id.content_actions);
+        new Thread((Runnable) this::DBConnection).start();
 
-        content_main.setVisibility(View.VISIBLE);
-        content_account.setVisibility(View.INVISIBLE);
-        content_documents.setVisibility(View.INVISIBLE);
-        content_online_journal.setVisibility(View.INVISIBLE);
-        content_actions.setVisibility(View.INVISIBLE);
+        {
+            content_main = findViewById(R.id.content_main);
+            content_account = findViewById(R.id.content_account);
+            content_documents = findViewById(R.id.content_documents);
+            content_online_journal = findViewById(R.id.content_online_journal);
+            content_actions = findViewById(R.id.content_actions);
+
+            content_main.setVisibility(View.VISIBLE);
+            content_account.setVisibility(View.INVISIBLE);
+            content_documents.setVisibility(View.INVISIBLE);
+            content_online_journal.setVisibility(View.INVISIBLE);
+            content_actions.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         toolbar.setTitle(R.string.menu_main);
@@ -73,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressLint("NonConstantResourceId")
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
         drawer.closeDrawer(GravityCompat.START);
         int id = item.getItemId();
 
@@ -128,8 +146,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         EditText edit_text_login, edit_text_password;
         edit_text_login = findViewById(R.id.edit_text_login);
         edit_text_password = findViewById(R.id.edit_text_password);
-        Editable login = edit_text_login.getText();
-        Editable password = edit_text_password.getText();
+        String entered_login = edit_text_login.getText().toString();
+        String entered_password = edit_text_password.getText().toString();
 
+        new Thread((Runnable) () ->
+        {
+            try
+            {
+                st = con.createStatement();
+                String query = "SELECT * FROM Students WHERE StudentLogin = " + entered_login;
+                rs = st.executeQuery(query);
+                if (rs.getString("StudentPassword").equals(entered_password))
+                {
+                    TextView login;
+                    login = findViewById(R.id.login);
+                    login.setText(rs.getString("StudentFullName"));
+                }
+            }
+            catch (SQLException throwables)
+            {
+                throwables.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void DBConnection()
+    {
+        final String MSSQL_DB = "jdbc:jtds:sqlserver://katshido.database.windows.net:1433;databaseName=MS_BD;" +
+                "encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;" +
+                "loginTimeout=30;Authentication=ActiveDirectoryIntegrated";
+        final String MSSQL_LOGIN = "KatShiDo@katshido";
+        final String MSSQL_PASS= "20030117ybrbnF";
+
+        try
+        {
+            java.lang.Class.forName("net.sourceforge.jtds.jdbc.Driver");
+            con = null;
+            try
+            {
+                con = DriverManager.getConnection(MSSQL_DB, MSSQL_LOGIN, MSSQL_PASS);
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
