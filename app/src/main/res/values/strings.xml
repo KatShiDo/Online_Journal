@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" />
+    <string name="app_name">Электронный журнал</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Гость</string>
@@ -16,4 +16,13 @@
     <string name="hint_password">Введите пароль</string>
     <string name="button_enter_name">Войти</string>
     <string name="todo">TODO</string>
+    <string name="no_chosen">(не выбрано)</string>
+    <string name="student_choice">Ученик</string>
+    <string name="teacher_choice">Учитель</string>
+    <string name="director_choice">Директор</string>
+    <string name="root_login">root</string>
+    <string name="root_password">1</string>
+    <string name="director_full_name">Васильев Павел Иванович</string>
+    <string name="school_address">ул. Пушкина, д. 23</string>
+    <string name="school_name">Школа Н.</string>
 </resources>

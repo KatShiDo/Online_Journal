@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="documents_array">
+        <item>Список преподавательского состава</item>
+        <item>Список школьников</item>
+        <item>Список людей, имеющих доступ в школу</item>
+        <item>Список учеников класса вместе с родителями</item>
+        <item>Список сотрудников</item>
+    </string-array>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/student_account_enter"
+        android:title="@string/student_choice"/>
+
+    <item
+        android:id="@+id/teacher_account_enter"
+        android:title="@string/teacher_choice"/>
+
+    <item
+        android:id="@+id/director_account_enter"
+        android:title="@string/director_choice"/>
+
+</menu>
