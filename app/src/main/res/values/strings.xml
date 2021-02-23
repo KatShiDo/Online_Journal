@@ -25,4 +25,23 @@
     <string name="director_full_name">Васильев Павел Иванович</string>
     <string name="school_address">ул. Пушкина, д. 23</string>
     <string name="school_name">Школа Н.</string>
+    <string name="employee_card_id_hint">Номер карты сотрудника</string>
+    <string name="employee_full_name_hint">ФИО сотрудника</string>
+    <string name="employee_phone_hint">Номер телефона сотрудника</string>
+    <string name="employee_position_hint">Должность сотрудника</string>
+    <string name="button_accept">Принять</string>
+    <string name="learner_card_id_hint">Номер карты ученика</string>
+    <string name="learner_full_name_hint">ФИО ученика</string>
+    <string name="learner_login_hint">Логин ученика</string>
+    <string name="learner_password_hint">Пароль ученика</string>
+    <string name="learner_phone_hint">Номер телефона ученика</string>
+    <string name="learner_age_hint">Возраст ученика</string>
+    <string name="teacher_card_id_hint">Номер карты учителя</string>
+    <string name="teacher_full_name_hint">ФИО учителя</string>
+    <string name="teacher_login_hint">Логин учителя</string>
+    <string name="teacher_password_hint">Пароль учителя</string>
+    <string name="teacher_phone_hint">Номер телефона учителя</string>
+    <string name="teacher_position_hint">Должность учителя</string>
+    <string name="teacher_qualification_hint">Квалификация учителя</string>
+    <string name="class_caption_hint">Название класса</string>
 </resources>

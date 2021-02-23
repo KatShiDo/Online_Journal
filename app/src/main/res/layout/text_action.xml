@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/content_action_employee" />
+    <include layout="@layout/content_action_learner" />
+    <include layout="@layout/content_action_teacher" />
+    <include layout="@layout/content_action_class" />
+    <include layout="@layout/content_action_add_learner_in_class" />
+    <include layout="@layout/content_action_add_teacher_in_class" />
+    <include layout="@layout/content_action_mark" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

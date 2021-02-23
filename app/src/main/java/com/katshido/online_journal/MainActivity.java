@@ -32,6 +32,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -54,12 +55,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ListView list_documents = findViewById(R.id.list_documents);
         String[] documents_array = getResources().getStringArray(R.array.documents_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, documents_array);
-        list_documents.setAdapter(adapter);
+        ArrayAdapter<String> adapter_documents = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, documents_array);
+        list_documents.setAdapter(adapter_documents);
+
+        ListView list_actions = findViewById(R.id.list_actions);
+        String[] actions_array = getResources().getStringArray(R.array.actions_array);
+        ArrayAdapter<String> adapter_actions = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, actions_array);
+        list_actions.setAdapter(adapter_actions);
 
         list_documents.setOnItemClickListener((parent, view, position, id) ->
         {
             Intent intent = new Intent(MainActivity.this, DocumentActivity.class);
+            intent.putExtra("position", position);
+            startActivity(intent);
+        });
+
+        list_actions.setOnItemClickListener((parent, view, position, id) ->
+        {
+            Intent intent = new Intent(MainActivity.this, ActionActivity.class);
             intent.putExtra("position", position);
             startActivity(intent);
         });
@@ -75,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        navigationView.getMenu().findItem(R.id.nav_documents).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_online_journal).setEnabled(false);
+        navigationView.getMenu().findItem(R.id.nav_actions).setEnabled(false);
+
         new Thread(() ->
         {
             DBConnection();
@@ -84,14 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 throwables.printStackTrace();
             }
         }).start();
-
-
-        /*new Thread((Runnable) this::DBConnection).start();
-        try {
-            formSchool();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }*/
 
         {
             content_main = findViewById(R.id.content_main);
@@ -142,6 +151,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 content_actions.setVisibility(View.INVISIBLE);
                 break;
             case R.id.nav_documents:
+                new Thread(() -> {
+                    try {
+                        formSchool();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }).start();
                 toolbar.setTitle(R.string.menu_documents);
                 content_main.setVisibility(View.INVISIBLE);
                 content_account.setVisibility(View.INVISIBLE);
@@ -203,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     status.setText(R.string.student_choice);
                                     isEntered = true;
+                                    navigationView.getMenu().findItem(R.id.nav_online_journal).setEnabled(true);
                                 });
 
                             }
@@ -244,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         }
                                         status.setText(R.string.teacher_choice);
                                         isEntered = true;
+                                        navigationView.getMenu().findItem(R.id.nav_actions).setEnabled(true);
                                     }
                                 });
 
@@ -277,6 +295,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     login.setText(R.string.director_full_name);
                                     status.setText(R.string.director_choice);
                                     isEntered = true;
+                                    navigationView.getMenu().findItem(R.id.nav_documents).setEnabled(true);
+                                    navigationView.getMenu().findItem(R.id.nav_actions).setEnabled(true);
                                 });
                             }
                             else
